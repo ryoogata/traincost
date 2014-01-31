@@ -1,0 +1,32 @@
+#!/bin/sh
+
+export LANG=ja_JP.UTF-8
+export AWS_ACCESS_KEY_ID=<%= node["aws"]["_ACCESS_KEY"]%>
+export AWS_SECRET_ACCESS_KEY=<%= node["aws"]["_SECRET_KEY"]%>
+
+time="\""`export TZ=JST-9; date '+%Y-%m-%d %H:%M:%S %Z'`"\""
+json=`aws sqs --output json --region <%= node["aws"]["sqs"]["_QUEUE_REGION"]%> receive-message --queue-url <%= node["aws"]["sqs"]["_QUEUE_URL"]%>`
+body=`echo $json | jq -r '.Messages[].Body' | jq -r '.Message'`
+receipthandle=`echo $json | jq -r '.Messages[].ReceiptHandle'`
+
+if [ -z "$receipthandle" ]; then
+  echo "ReceiptHandle is Null"
+  exit 0
+fi
+
+year=`echo $body | jq -r '.Year'`
+date=`echo $body | jq -r '.Date'`
+from=`echo $body | jq -r '.From' | tr % = |nkf -WwmQ`
+destination=`echo $body | jq -r '.Destination' | tr % = |nkf -WwmQ`
+cost=`echo $body | jq -r '.Cost'`
+
+aws dynamodb --region <%= node["aws"]["dynamodb"]["_REGION"]%> put-item --table-name <%= node["aws"]["dynamodb"]["_TABLE_NAME"]%> --item {\
+\"Date\":{\"S\":\"$date\"}\,\
+\"Timestamp\":{\"S\":"$time"}\,\
+\"Year\":{\"S\":\"$year\"}\,\
+\"From\":{\"S\":\"$from\"}\,\
+\"Destination\":{\"S\":\"$destination\"}\,\
+\"Cost\":{\"S\":\"$cost\"}\
+}
+
+aws sqs --region <%= node["aws"]["sqs"]["_QUEUE_REGION"]%> delete-message --queue-url <%= node["aws"]["sqs"]["_QUEUE_URL"]%> --receipt-handle $receipthandle

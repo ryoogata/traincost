@@ -1,0 +1,22 @@
+#!/bin/sh
+
+export LANG=ja_JP.UTF-8
+export AWS_ACCESS_KEY_ID=<%= node["aws"]["_ACCESS_KEY"]%>
+export AWS_SECRET_ACCESS_KEY=<%= node["aws"]["_SECRET_KEY"]%>
+
+Year=`export TZ=JST-9; date '+%Y'`
+Date=`/usr/bin/nkf -s /tmp/mail.txt | /usr/bin/lgrep "出発" | awk -F\( '{print $1}' | awk -F/ '{print $2 "/" $3}'`
+From=`/usr/bin/nkf -s /tmp/mail.txt | /usr/bin/lgrep "Subject" | awk '{print $2}' | sed  -e "s/の経路//" | awk -F"→" '{print $1}'| nkf -wMQ | tr = %`
+Destination=`/usr/bin/nkf -s /tmp/mail.txt | /usr/bin/lgrep "Subject" | awk '{print $2}' | sed  -e "s/の経路//" | awk -F"→" '{print $2}'| nkf -wMQ | tr = %`
+Cost=`/usr/bin/nkf -s /tmp/mail.txt | /usr/bin/lgrep "円" | awk -F"　" '{print $2}' | sed -e "s/片道//" | sed -e "s/円//"`
+
+aws sqs --region <%= node["aws"]["sqs"]["_QUEUE_REGION"]%> send-message --queue-url <%= node["aws"]["sqs"]["_QUEUE_URL"]%> --message-body "{\
+\"Message\": {\
+\"Year\":\"$Year\",\
+\"Date\":\"$Date\",\
+\"From\":\"$From\",\
+\"Destination\":\"$Destination\",\
+\"Cost\":\"$Cost\"\
+}}"
+
+rm -rf /tmp/mail.txt
