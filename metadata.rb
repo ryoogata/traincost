@@ -11,7 +11,10 @@ supports "centos"
 # == Recipes
 # 
 
-recipe "traincost",
+recipe "traincost::server",
+  "Setup TrainCost Management System"
+
+recipe "traincost::worker",
   "Setup TrainCost Management System"
 
 # == Attributes
