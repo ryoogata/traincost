@@ -1,5 +1,15 @@
 default["traincost"]["localhostname"] = ""
 default["traincost"]["aliasuser"] = ""
+default["traincost"]["sqs2dynamo.sh"]["_PATH"] = "/tmp/sqs2dynamo.sh"
+default["traincost"]["mail2sns.sh"]["_PATH"] = "/tmp/mail2sns.sh"
+default["traincost"]["mail2sqs.sh"]["_PATH"] = "/tmp/mail2sqs.sh"
+
+
+default["traincost"]["crontab"]["_MINUTE"] = "*/10"
+default["traincost"]["crontab"]["_HOUR"] = "10-17"
+default["traincost"]["crontab"]["_DAY"] = "*"
+default["traincost"]["crontab"]["_MONTH"] = "*"
+default["traincost"]["crontab"]["_WEEKDAY"] = "1-5"
 
 default["aws"]["_ACCESS_KEY"] = ""
 default["aws"]["_SECRET_KEY"] = ""

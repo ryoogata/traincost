@@ -15,7 +15,7 @@
 end
 
 
-template "/tmp/mail2sqs.sh" do
+template "#{node['traincost']['mail2sqs.sh']['_PATH']}" do
   source "mail2sqs.sh.erb"
   owner "root"
   group "root"
@@ -23,7 +23,7 @@ template "/tmp/mail2sqs.sh" do
 end
 
 
-template "/tmp/mail2sns.sh" do
+template "#{node['traincost']['mail2sns.sh']['_PATH']}" do
   source "mail2sns.sh.erb"
   owner "root"
   group "root"

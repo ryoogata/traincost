@@ -15,7 +15,7 @@
 end
 
 
-template "/tmp/sqs2dynamo.sh" do
+template "#{node['traincost']['sqs2dynamo.sh']['_PATH']}" do
   source "sqs2dynamo.sh.erb"
   owner "root"
   group "root"
@@ -24,10 +24,10 @@ end
 
 
 cron "sqs2dynamo.sh" do
-  minute "0"
-  hour "10-17"
-  day "*"
-  month "*"
-  weekday "1-5"
-  command "/tmp/sqs2dynamo.sh"
+  minute "#{node['traincost']['crontab']['_MINUTE']}"
+  hour "#{node['traincost']['crontab']['_HOUR']}"
+  day "#{node['traincost']['crontab']['_DAY']}"
+  month "#{node['traincost']['crontab']['_MONTH']}"
+  weekday "#{node['traincost']['crontab']['_WEEKDAY']}"
+  command "#{node['traincost']['sqs2dynamo.sh']['_PATH']}"
 end

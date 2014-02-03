@@ -120,3 +120,74 @@ attribute "aws/dynamodb/_TABLE_NAME",
   :recipes => [
     "traincost::worker"
   ]
+attribute "traincost/sqs2dynamo.sh/_PATH",
+  :display_name => "",
+  :description =>
+     "",
+  :required => "required",
+  :recipes => [
+     "traincost::worker"
+  ]
+
+attribute "traincost/mail2sns.sh/_PATH",
+  :display_name => "",
+  :description =>
+     "",
+  :required => "required",
+  :recipes => [
+     "traincost::server"
+  ]
+
+attribute "traincost/mail2sqs.sh/_PATH",
+  :display_name => "",
+  :description =>
+     "",
+  :required => "required",
+  :recipes => [
+     "traincost::server"
+  ]
+
+attribute "traincost/crontab/_MINUTE",
+  :display_name => "",
+  :description =>
+     "",
+  :required => "required",
+  :recipes => [
+     "traincost::worker"
+  ]
+
+attribute "traincost/crontab/_HOUR",
+  :display_name => "",
+  :description =>
+     "",
+  :required => "required",
+  :recipes => [
+     "traincost::worker"
+  ]
+
+attribute "traincost/crontab/_DAY",
+  :display_name => "",
+  :description =>
+     "",
+  :required => "required",
+  :recipes => [
+     "traincost::worker"
+  ]
+
+attribute "traincost/crontab/_MONTH",
+  :display_name => "",
+  :description =>
+     "",
+  :required => "required",
+  :recipes => [
+     "traincost::worker"
+  ]
+
+attribute "traincost/crontab/_WEEKDAY",
+  :display_name => "",
+  :description =>
+     "",
+  :required => "required",
+  :recipes => [
+     "traincost::worker"
+  ]
