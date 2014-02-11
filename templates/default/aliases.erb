@@ -10,7 +10,7 @@
 # Basic system aliases -- these MUST be present.
 mailer-daemon:	postmaster
 postmaster:	root
-<%= node["traincost"]["aliasuser"]%>: "|cat >>/tmp/mail.txt && /tmp/mail2sqs.sh"
+<%= node["traincost"]["aliasuser"]%>: "|cat >>/tmp/mail.txt && /tmp/mail2sns.sh"
 
 # General redirections for pseudo accounts.
 bin:		root
