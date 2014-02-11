@@ -18,3 +18,5 @@ aws sns --region <%= node["aws"]["sns"]["_SNS_REGION"]%> publish --topic-arn <%=
 \"Destination\":\"$Destination\",\
 \"Cost\":\"$Cost\"\
 }"
+
+rm -rf /tmp/mail.txt
