@@ -29,4 +29,8 @@ aws dynamodb --region <%= node["aws"]["dynamodb"]["_REGION"]%> put-item --table-
 \"Cost\":{\"S\":\"$cost\"}\
 }
 
+aws sns --region <%= node["aws"]["sns"]["_SNS_REGION"]%> publish --topic-arn <%= node["aws"]["sns"]["_TRAINCOSTDONE_ARN"]%> --message "\
+$year $date $from → $destination $cost 円\
+"
+
 aws sqs --region <%= node["aws"]["sqs"]["_QUEUE_REGION"]%> delete-message --queue-url <%= node["aws"]["sqs"]["_QUEUE_URL"]%> --receipt-handle $receipthandle

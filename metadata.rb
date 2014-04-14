@@ -5,6 +5,8 @@ license          'All rights reserved'
 description      'Installs/Configures traincost'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '0.1.1'
+depends          'awstool'
+depends          'utility'
 
 supports "centos"
 
@@ -99,6 +101,15 @@ attribute "aws/sns/_SNS_REGION",
   :required => "optional",
   :recipes => [
     "traincost::server"
+  ]
+
+attribute "aws/sns/_TRAINCOSTDONE_ARN",
+  :display_name => "",
+  :description =>
+     "",
+  :required => "required",
+  :recipes => [
+    "traincost::worker"
   ]
 
 attribute "aws/dynamodb/_REGION",
