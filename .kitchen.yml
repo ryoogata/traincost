@@ -1,0 +1,30 @@
+---
+driver_plugin: docker
+driver_config:
+  require_chef_omnibus: true
+
+platforms:
+- name: centos-6.4
+  driver_config:
+    image: centos:6.4
+
+suites:
+- name: default
+  run_list:
+  - recipe[awstool::setup_awscli]
+  - recipe[utility::lv]
+  - recipe[utility::jq]
+  - recipe[traincost::server]
+  - recipe[traincost::worker]
+  attributes:
+    traincost:
+      localhostname: 'example.net'
+      aliasuser: 'command'
+    aws:
+      _ACCESS_KEY: 'aaa'
+      _SECRET_KEY: 'bbb'
+      sqs:
+        _QUEUE_URL: 'https://sqs.us-west-1.amazonaws.com/000/TrainCost'
+      sns:
+        _TOPICS_ARN: 'arn:aws:sns:us-west-1:000:TrainCost'
+        _TRAINCOSTDONE_ARN: 'arn:aws:sns:us-west-1:000:TrainCostDone'
